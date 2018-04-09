@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17D2047" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="1">
+    <entity name="Account" representedClassName="Account" syncable="YES">
+        <attribute name="addresses" attributeType="Transformable" customClassName="[String]" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="port" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="type" attributeType="String" customClassName="ConnectionType" syncable="YES"/>
+        <attribute name="username" attributeType="String" syncable="YES"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="account" inverseEntity="Item" syncable="YES"/>
+    </entity>
+    <entity name="File" representedClassName="File" parentEntity="Item" syncable="YES">
+        <attribute name="lastAccessed" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="size" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="Folder" representedClassName="Folder" parentEntity="Item" syncable="YES">
+        <attribute name="favoriteDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="Item" representedClassName="Item" isAbstract="YES" syncable="YES">
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastModified" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="account" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="items" inverseEntity="Account" syncable="YES"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Item" inverseName="parent" inverseEntity="Item" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Account" positionX="-27" positionY="63" width="128" height="150"/>
+        <element name="File" positionX="0" positionY="108" width="128" height="75"/>
+        <element name="Folder" positionX="27" positionY="117" width="128" height="60"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="135"/>
+    </elements>
+</model>

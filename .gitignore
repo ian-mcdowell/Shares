@@ -1,0 +1,4 @@
+.DS_Store
+*.xcworkspacedata
+*.xcuserdatad
+.ibuild
