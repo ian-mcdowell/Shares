@@ -1,0 +1,8 @@
+[submodule "Submodules/UserInterface"]
+	path = Submodules/UserInterface
+	url = https://github.com/IMcD23/UserInterface.git
+	branch = master
+[submodule "Submodules/DataUtilities"]
+	path = Submodules/DataUtilities
+	url = https://github.com/IMcD23/DataUtilities.git
+	branch = master
