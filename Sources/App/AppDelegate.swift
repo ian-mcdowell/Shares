@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ConnectionKit
 
 class DocumentBrowserDelegate: NSObject, UIDocumentBrowserViewControllerDelegate {
     func documentBrowser(_ controller: UIDocumentBrowserViewController, didPickDocumentURLs documentURLs: [URL]) {
@@ -30,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.rootViewController = vc
         window.makeKeyAndVisible()
         self.window = window
+
+        print(ConnectionManager.availableConnections)
 
         return true
     }

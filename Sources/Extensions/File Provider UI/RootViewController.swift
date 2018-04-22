@@ -8,6 +8,8 @@
 
 import UIKit
 import FileProviderUI
+import SharesUI
+import SharesData
 
 class RootViewController: FPUIActionExtensionViewController {
 
@@ -25,22 +27,26 @@ class RootViewController: FPUIActionExtensionViewController {
         }
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = .white
+        FileProviderDomainManager.syncDomains()
+    }
+
     override func prepare(forAction actionIdentifier: String, itemIdentifiers: [NSFileProviderItemIdentifier]) {
 
     }
     
     override func prepare(forError error: Error) {
-        visibleViewController = UINavigationController.init(rootViewController: UIViewController.init(nibName: nil, bundle: nil))
+        let accounts = AccountListViewController()
+        accounts.navigationItem.leftBarButtonItem = UIBarButtonItem.init(image: UIImage.close, style: .plain, target: self, action: #selector(close))
+        visibleViewController = UINavigationController.init(rootViewController: accounts)
     }
 
-    @IBAction func doneButtonTapped(_ sender: Any) {
-        // Perform the action and call the completion block. If an unrecoverable error occurs you must still call the completion block with an error. Use the error code FPUIExtensionErrorCode.failed to signal the failure.
+    override func close() {
         extensionContext.completeRequest()
     }
-    
-    @IBAction func cancelButtonTapped(_ sender: Any) {
-        extensionContext.cancelRequest(withError: NSError(domain: FPUIErrorDomain, code: Int(FPUIExtensionErrorCode.userCancelled.rawValue), userInfo: nil))
-    }
-    
+
 }
 

@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import ConnectionKit
 
 @objc(Account)
 public class Account: NSManagedObject {
@@ -17,7 +18,7 @@ public class Account: NSManagedObject {
     }
 
     /// Relative path in storage
-    @NSManaged private var id: String
+    @NSManaged internal var id: String
 
     @NSManaged public var addresses: [String]
     @NSManaged public var name: String
@@ -25,7 +26,14 @@ public class Account: NSManagedObject {
     @NSManaged internal var type: String
     @NSManaged public var username: String
 
-    public var all: [Account] {
+    public var connectionType: ConnectionManager.Connection? {
+        return ConnectionManager.availableConnections.first(where: { $0.bundleID == self.type })
+    }
+    public var connectionTypeName: String {
+        return connectionType?.type.displayName ?? "Unknown Connection Type"
+    }
+
+    public static var all: [Account] {
         let request: NSFetchRequest<Account> = Account.fetchRequest()
         request.sortDescriptors = [
             NSSortDescriptor.init(key: #keyPath(Account.name), ascending: true)
@@ -50,7 +58,7 @@ public class Account: NSManagedObject {
 
     public static func create(
         name: String,
-        type: Account.ConnectionType,
+        type: ConnectionManager.Connection,
         username: String,
         password: String,
         addresses: [String],
@@ -61,7 +69,7 @@ public class Account: NSManagedObject {
         let account = Account(context: context)
 
         account.name = name
-        account.type = type.rawValue
+        account.type = type.bundleID
         account.username = username
         account.addresses = addresses
         account.port = port
@@ -76,11 +84,6 @@ public class Account: NSManagedObject {
         Persistence.container.viewContext.delete(self)
     }
 
-    private var fileProviderDomain: NSFileProviderDomain {
-        let identifier = NSFileProviderDomainIdentifier.init(self.id)
-        return NSFileProviderDomain.init(identifier: identifier, displayName: self.name, pathRelativeToDocumentStorage: self.id)
-    }
-
     public override func awakeFromInsert() {
         super.awakeFromInsert()
 
@@ -90,7 +93,7 @@ public class Account: NSManagedObject {
     public override func didSave() {
         super.didSave()
 
-        let domain = self.fileProviderDomain
+        let domain = NSFileProviderDomain.forAccount(self)
         NSFileProviderManager.add(domain) { error in
             if let error = error {
                 print("Unable to add file provider domain: \(error.localizedDescription)")
@@ -101,7 +104,7 @@ public class Account: NSManagedObject {
     public override func prepareForDeletion() {
         super.prepareForDeletion()
 
-        let domain = self.fileProviderDomain
+        let domain = NSFileProviderDomain.forAccount(self)
         NSFileProviderManager.remove(domain) { error in
             if let error = error {
                 print("Unable to remove file provider domain: \(error.localizedDescription)")

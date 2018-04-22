@@ -52,6 +52,8 @@ class FileProviderExtension: NSFileProviderExtension {
     
     override init() {
         super.init()
+
+        FileProviderDomainManager.syncDomains()
     }
     
     override func item(for identifier: NSFileProviderItemIdentifier) throws -> NSFileProviderItem {

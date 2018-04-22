@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>AWSCore</string>
+	<key>build</key>
+	<dict>
+		<key>location</key>
+		<dict>
+			<key>type</key>
+			<string>github</string>
+			<key>path</key>
+			<string>aws/aws-sdk-ios</string>
+			<key>branch</key>
+			<string>master</string>
+		</dict>
+		<key>buildSystem</key>
+		<string>xcode</string>
+		<key>buildArgs</key>
+		<array>
+			<string>-project</string>
+			<string>AWSiOSSDKv2.xcodeproj</string>
+			<string>-target</string>
+			<string>AWSCore</string>
+		</array>
+		<key>outputs</key>
+		<array>
+			<string>AWSCore.framework</string>
+		</array>
+	</dict>
+</dict>
+</plist>

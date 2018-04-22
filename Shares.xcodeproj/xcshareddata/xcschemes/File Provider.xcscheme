@@ -77,8 +77,12 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "1"
+         BundleIdentifier = "net.ianmcdowell.sharesv2"
+         RemotePath = "/Users/ian/Library/Developer/CoreSimulator/Devices/E1FB00B9-1BCC-473D-9D48-29C4E681D4FA/data/Containers/Bundle/Application/00A018E6-72C2-42FF-A838-C0A21AAF0A16/Shares.app">
+      </RemoteRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3CE0F0B820788E57008A5134"
@@ -86,7 +90,7 @@
             BlueprintName = "Shares"
             ReferencedContainer = "container:Shares.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

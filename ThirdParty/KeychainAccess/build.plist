@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>KeychainAccess</string>
+	<key>build</key>
+	<dict>
+		<key>location</key>
+		<dict>
+			<key>type</key>
+			<string>github</string>
+			<key>path</key>
+			<string>kishikawakatsumi/KeychainAccess</string>
+			<key>branch</key>
+			<string>master</string>
+		</dict>
+		<key>buildSystem</key>
+		<string>xcode</string>
+		<key>buildArgs</key>
+		<array>
+			<string>-project</string>
+			<string>Lib/KeychainAccess.xcodeproj</string>
+			<string>-target</string>
+			<string>KeychainAccess</string>
+		</array>
+		<key>outputs</key>
+		<array>
+			<string>KeychainAccess.framework</string>
+		</array>
+	</dict>
+</dict>
+</plist>

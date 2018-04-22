@@ -11,6 +11,10 @@ import CoreData
 
 internal class Persistence {
 
+    private static let appGroupID = "group.net.ianmcdowell.shares"
+
+    public static let containerURL: URL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupID)!
+
     static let container: NSPersistentContainer = {
         guard
             let url = Bundle.init(for: Persistence.self).url(forResource: "Model", withExtension: "momd"),
@@ -20,6 +24,9 @@ internal class Persistence {
         }
 
         let container = NSPersistentContainer.init(name: "Model", managedObjectModel: model)
+        container.persistentStoreDescriptions = [
+            NSPersistentStoreDescription.init(url: Persistence.containerURL.appendingPathComponent("storage.sqlite"))
+        ]
         container.loadPersistentStores(completionHandler: { storeDescription, error in
             if let error = error {
                 fatalError(error.localizedDescription)
@@ -28,13 +35,17 @@ internal class Persistence {
         return container
     }()
 
+    private static let context: NSManagedObjectContext = {
+        return container.newBackgroundContext()
+    }()
+
     static func fetch<T>(_ request: NSFetchRequest<T>) throws -> [T] where T : NSFetchRequestResult {
-        dispatchPrecondition(condition: .onQueue(.main))
-        return try container.viewContext.fetch(request)
+//        dispatchPrecondition(condition: .onQueue(.main))
+        return try context.fetch(request)
     }
 
     static func count<T>(for request: NSFetchRequest<T>) throws -> Int where T : NSFetchRequestResult {
-        dispatchPrecondition(condition: .onQueue(.main))
-        return try container.viewContext.count(for: request)
+//        dispatchPrecondition(condition: .onQueue(.main))
+        return try context.count(for: request)
     }
 }
